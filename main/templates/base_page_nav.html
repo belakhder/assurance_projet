@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>assurance</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/bootstrap.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/bootstrap.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/intlTelInput.css')}}"
+    />
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename='css/demo.css')}}" /> -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/popper.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.js')}}"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/login131.css')}}"
+    />
+  </head>
+
+  <body id="background">
+    <div>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="alert alert-success alert-dismissible fade show">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+    </div>
+    <div class="center" style="margin: auto">
+      {% block body %}{% endblock %}
+    </div>
+    <script>
+      $(document).ready(function () {
+        // show the alert
+        setTimeout(function () {
+          $(".alert").alert("close");
+        }, 2500);
+        console.log("hhh");
+      });
+    </script>
+  </body>
+</html>

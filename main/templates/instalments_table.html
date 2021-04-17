@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div style="padding-left:50px;color:rgb(11, 12, 15);" >
+  <p> <b>Nom</b>:{{search_result[0][10]}}</p>
+  <p> <b>Prenom</b> :{{search_result[0][9]}}</p>
+  <p> <b>Reference contract</b> :{{contract_id}}</p>
+  <p> <b>Reference client </b>:{{id}}</p>
+</div>
+</div>
+<div class="container pt-5">
+  
+<table class="table table-striped">
+    <thead>
+      <tr>
+
+        <th scope="col"></th>
+        {% for name in columns[0:4] %}
+        <th scope="col">{{name}}</th>
+        {%endfor%}
+        
+      </tr>
+    </thead>
+    <tbody>
+       <form role="form" method="post" action="{{url_for('instalment.paye_instalments',id=id,contract_id=contract_id)}}">
+        {% for row in search_result %}
+      <tr>
+        <th scope="row">Tranche {{loop.index}}</th>
+        <td>{{row[1]}}</td>
+         {% if row[3]==row[2] %}
+          <td style=" background:repeating-linear-gradient( -45deg, transparent 0 10px, rgb(207, 195, 195) 10px 12px );font-family: serif ;">Non paye</td >
+        {%else%}
+        <td>{{(row[6]|sort)[-1]}}</td>
+        {%endif%}
+        <td><p class="text-center" style="margin: 0%;">{{row[3]}}</p>
+        </td>
+        <td>{{row[2]}}</td>
+      </tr>
+      {%endfor%}
+
+      <tr>
+       
+        <th scope="row">Restant due</th>
+        <td colspan="2"  id="somme">{{search_result[0][4]|round(2)}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+    </div>
+    <br><br><br>
+

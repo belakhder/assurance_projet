@@ -1,0 +1,138 @@
+{% extends 'base_page.html' %} {% block body %} {% set current_statu_value='' %}
+{% set current_contract_value=session['contract_id'] %} {% if unpaid %} {% set
+relance=''%} {% set message='solde impayé est de' +' '+ unpaid | string %} {%
+elif relance %} {% set message='client est en relance pour les échéances suivant
+:' + relance | string %} {% else %} {% set relance=''%} {% set message='client
+est à jours' %} {% endif %}
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+{% include 'modal_company/info_client_company.html' %}
+
+<!-- Modal -->
+{% include 'modal_company/info_address_company.html' %}
+
+
+<!-- Modal -->
+{% include 'modal_company/info_sinister_company.html' %}
+<!-- Modal -->
+{% include 'modal_company/info_indemnity_company.html' %}
+
+<!-- Modal -->
+{% include 'modal_company/info_add_contract_company.html' %}
+<!-- Modal -->
+{% include 'modal_company/info_contract_company.html' %}
+
+<!-- Modal -->
+{% include 'modal_company/add_sinister_company.html' %}
+
+<div class="row">
+  <div class="col" style="padding-right: 5%; padding-top: 5%">
+    <button
+      type="button"
+      class="btn fiche btn-secondary float-right"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="{{message}}{{relance}}"
+    >
+      à savoir
+    </button>
+  </div>
+</div>
+
+
+<div
+  class="row"
+  style="
+    padding-bottom: 0%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    margin: 2.5%;
+  "
+>
+  <div
+    class="card"
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+      
+    "
+    id="wrapper"
+  >
+    <div class="col" style="padding: 2.5%; padding-top: 0%">
+      {% include 'cards/card_company/card_info_perso_company.html' %}
+    </div>
+    <div class="col" style="padding: 0%; margin: 0">
+      {% include 'cards/card_info_address.html' %}
+    </div>
+</div>
+  </div>
+  {% if contract_id !='ClientPotentiel'%}
+  <div class="row" style="padding: 1.5%;">
+    <div class="col">{% include 'cards/card_company/card_info_contracts_company.html' %}</div>
+  </div>
+
+  <div class="row" style="padding: 1.5%;">
+    <div class="col">{% include 'cards/card_company/card_info_sinisters_company.html' %}</div>
+  </div>
+
+  <div class="row" style="padding: 1.5%">
+    <div class="col" >
+      {% include 'cards/card_company/card_info_indemnity_company.html' %}
+    </div>
+
+    {% if total_indemnity!=0 %}
+    <div class="card" style="padding: 1.5%;">
+      <h5>Totales Des Indemnités</h5>
+
+      <div class="row">
+        <div class="col-sm">
+          {% if indemnity!=0 %}
+
+          <p>Totale : {{total_indemnity}}</p>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% if nb %}
+  <section id="payments" style="width:100%">
+    <div class="col" >
+      <div class="card" style="padding: 2.5%; margin: 1%">
+        <br><br>
+        <iframe
+          id="myFrame"
+          src="{{url_for('instalment.show_all_instalments_',id=id,contract_id=current_contract_value)}}"
+          style="border: none"
+          height="700"
+          width="99%"
+          title="paiments"
+        >
+        </iframe>
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <div class="row" >
+    <div class="col" >
+      <div class="card" style="padding: 2.5%; margin: 2.5%">
+
+            <h5>échéances</h5>
+            <p>
+              Client a Payé Au Comptant à La Souscription ,Il N'a Pas
+              D'échéances !
+            </p>
+
+      </div>
+    </div>
+</div>
+</div>
+      {% endif %}
+      {%endif%}
+      <script src="{{ url_for('static',filename='js/projectjs/fiche_client.js')}}"></script>
+      {% endblock %}
+

@@ -1,0 +1,25 @@
+<h5>
+  <i class="fa fa-building" aria-hidden="true"></i>Informations Société {%if
+  id%}
+  <a class="btn" data-toggle="modal" data-target="#info_perso">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+  </a>
+  <a class="btn" data-toggle="modal" data-target="#info_add_contract"
+    ><i class="fa fa-plus" aria-hidden="true"></i
+  ></a>
+  {%endif%}
+</h5>
+
+<div class="row">
+  <div class="col-sm">
+    {% if client_info %}
+    <ul>
+      {% for (key,value) in client_info.items() %}
+      <li>
+        <span><strong>{{ key }}</strong></span> : {{value}}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>

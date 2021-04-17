@@ -1,0 +1,187 @@
+{% extends 'base_page.html' %} 
+
+
+{% block body %}
+
+
+    <div class="container " style="width:100%" >
+        <h1  class="text-center">Critères de Recherche</h1>
+        <br><br><br>
+        <div class="row " id="wrapper" style="width:100%;margin: auto;" >
+          <div class="contact-form"  >
+            <div class="col input-fields"  >
+              
+                <h5>Informations Client</h5>
+                <form autocomplete="off" action="{{ url_for('client.search_company_')}}" method='POST'>
+                {% include "search_form/search_company.html"%}
+            </div>
+
+            <div class="col input-fields"  >
+              
+                    <h5>Informations Contrat</h5>
+                    {% include "search_form/search_contract.html"%}
+
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="float-right">
+              <input type="submit" name="submit" id="btn"  value="Chercher">
+            </div>
+        </div>
+        </div>
+     
+       
+
+        </form>
+
+     
+      
+        </br></br></br>
+        {% if search_result %}
+        <div class="container pt-5">
+          <h5>Résultat de La Recherche</h5>
+          <form role="form" method="post" action="{{ url_for('client.dwlcsv',file_name='search_result')}}">
+            <div>
+              <button id="button" type="submit" name="submit"   value="export">csv</button>
+            </div>
+          </form>
+        <table class="table table-striped responsive" id="tablewrapper" style="padding: 2.5%">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                {% for name in columns %}
+                
+                <th scope="col">{{name}}</th>
+                {%endfor%}
+              </tr>
+            
+            </thead>
+
+            <tbody>
+              {% for row in search_result %} {% if row[4][0]==None %} {% set
+                link=url_for('client.display_company',id=row[0],contract_id='')+'ClientPotentiel'
+                %} {%else%} {% set
+                link=url_for('client.display_company',id=row[0],contract_id=row[4][0])
+                %}{%endif%}
+                
+              <tr>
+                <th scope="row">{{loop.index+(nb*(page-1))}}</th>
+                                
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+              
+                <td>
+                  <a class="btn" href="{{link}}" role="button"
+                  ><i
+                    class="fa fa-building fa-2x"
+                    style="color: white"
+                    aria-hidden="true"
+                  ></i
+                ></a></td>
+                
+              </tr>
+              {%endfor%}  
+            
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+        {% if max_pages %}
+        <nav class="nav justify-content-center" >
+          <ul class="pagination" >
+            <li class="page-item"><a class="page-link" href="{{link_previous}}">Précédent</a></li>
+          {%if page < 3 %}
+          {%for i in range(([max_pages,5]|sort)[0])%}
+            <li class="page-item"><a class="page-link" href="{{url_for('client.get_search_company_',search_dict=search_dict,page=i+1)}}">{{i+1}}</a></li>
+          {%endfor%}
+          {% elif page >= 3 and page+2 <= max_pages %}
+          {%for i in range(-2,3,1)%}
+          <li class="page-item"><a class="page-link" href="{{url_for('client.get_search_company_',search_dict=search_dict,page=page+i)}}">{{page+i}}</a></li>
+          {%endfor%}
+          {% elif 3 <= page <=4 and  max_pages <=5 %}
+          {%for i in range(max_pages)%}
+          <li class="page-item"><a class="page-link" href="{{url_for('client.get_search_company_',search_dict=search_dict,page=i+1)}}">{{i+1}}</a></li>
+          {%endfor%}
+          {% elif page >= 3 and page+2 > max_pages %}
+          {%for i in range(max_pages-4,max_pages+1,1)%}
+          <li class="page-item"><a class="page-link" href="{{url_for('client.get_search_company_',search_dict=search_dict,page=i)}}">{{i}}</a></li>
+          {%endfor%}
+  
+          {%endif%}
+  
+            <li class="page-item"><a class="page-link" href="{{link_next}}">Suivant</a></li>
+          </ul>
+        </nav>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <br>
+  </div>
+<script>
+
+$ (function() {
+
+$('input[name="daterange"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange");
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  });
+});
+  function date_de_cloture() {
+  var end_date = document.getElementById("end_date");
+  var start_date_value=document.getElementById("start_date").value
+  var start_date = document.getElementById("start_date");
+  var end_date_value = document.getElementById("end_date").value;
+  if (start_date_value ){
+    console.log('hello2')
+    end_date.min=start_date.value
+  }
+  else if (end_date_value ||!start_date ){
+    console.log('hello')
+    start_date.value=end_date_value 
+    console.log(start_date.value) }
+
+  
+  
+}
+    </script>
+{% endblock %}

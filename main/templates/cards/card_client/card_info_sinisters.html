@@ -1,0 +1,76 @@
+<div class="card" style="padding: 2.5%; margin: 2.5%">
+  <h5>Historique Des Sinistres</h5>
+  <br />
+  {%if id %}
+  <div>
+    <button class="btn fiche" data-toggle="modal" data-target="#add_sinister">
+      <i style="font-size: 20px" class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+  </div>
+  {% endif %}
+  <div class="row">
+    {% if sinisters_history %}
+
+    <div
+      class="col-sm"
+      class="table-wrapper-scroll-y my-custom-scrollbar"
+      style="position: relative; max-height: 200px; overflow: auto"
+    >
+      <table
+        class="table table-striped table-responsive-md btn-table"
+        id="tablewrapper"
+        style="display: block"
+      >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            {% for name in sinisters_history[0].keys() %}
+
+            <th scope="col" style="width: 500px">{{name}}</th>
+            {%endfor%}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in sinisters_history %} {% if row['id']!=None %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+
+            <td>{{row['id']}}</td>
+            <td>{{row['Description']}}</td>
+            <td>{{row['Date de sinistre']}}</td>
+            <td>{{row['Statu']}}</td>
+            <td>{{row['Date de clôture']}}</td>
+            <td>{{row['Montant']}}</td>
+            <td>{{row['Assureur adversaire']}}</td>
+
+            {%if row['id'] and current_statu_value !='Résilié' and
+            current_statu_value !='Annulé' %}
+            <td>
+              <button
+                data-toggle="modal"
+                href="#info_sinister"
+                class="sinister_button"
+                value="{{url_for('sinister.modify_sinister',id=id,sinister_id=row['id'])}}"
+                role="button"
+                style="background: transparent"
+              >
+                <i
+                  class="fa fa-pencil"
+                  style="color: #c5ecfd"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </td>
+
+            {%endif%}
+          </tr>
+          {%endif%} {%endfor%}
+        </tbody>
+      </table>
+    </div>
+    {%else%}
+    <div style="padding: 15px">Le Client N'a Pas De Sinistre</div>
+    {% endif %}
+  </div>
+</div>

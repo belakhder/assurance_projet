@@ -1,0 +1,107 @@
+<div class="form-group">
+  <label>Référence Contrat</label>
+  <input
+    type="text"
+    name="contract_reference"
+    class="form-control"
+    placeholder="Enter La Référence Contrat"
+  />
+</div>
+<div class="form-group">
+  <label>Type De Contrat</label>
+  <select class="form-control" name="contract_type">
+    <option></option>
+    <option>type 1</option>
+    <option>type 2</option>
+    <option>type 3</option>
+    <option>type 4</option>
+  </select>
+</div>
+<div class="form-group">
+  <label>type de date</label>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="date_type"
+      value=""
+      checked
+    />
+    <label class="form-check-label"> All </label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="date_type"
+      value="creation_date"
+    />
+    <label class="form-check-label"> Création </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="date_type"
+      value="start_date"
+    />
+    <label class="form-check-label"> Début Effective </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="date_type"
+      value="end_date"
+    />
+    <label class="form-check-label"> Clôture </label>
+  </div>
+</div>
+<br />
+
+<div class="form-group">
+  <label> Range Date</label>
+  <br />
+  <input type="text2" id="daterange" name="daterange" />
+</div>
+<div class="form-group">
+  <label>Statu</label>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="status"
+      value=""
+      checked
+    />
+    <label class="form-check-label"> All </label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="status"
+      value="En Cours"
+    />
+    <label class="form-check-label"> En Cours </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="Activé" />
+    <label class="form-check-label"> Activé </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="status"
+      value="Résilié"
+    />
+    <label class="form-check-label"> Résilié </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="Annulé" />
+    <label class="form-check-label"> Annulé </label>
+  </div>
+</div>

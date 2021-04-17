@@ -1,0 +1,87 @@
+<!-- Modal -->
+<div class="modal fade" id="add_sinister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter Un Sinistre</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <div  >
+<form
+      role="form"
+      method="post"
+      action="{{url_for('sinister.add_sinister',id=id,contract_id=current_contract_value)}}"
+    >
+      <fieldset>
+        <p class="text-uppercase pull-center">Créer Sinister</p>
+        <div class="form-group">
+          <textarea
+            name="description"
+            class="form-control"
+            id="description"
+            rows="3"
+            maxlength="200"
+            placeholder="description"
+          ></textarea>
+        </div>
+        <input
+          type="date"
+          id="sinister_date"
+          name="sinister_date"
+          id="datepicker"
+          class="form-control datepicker"
+          required
+          placeholder="Entrer La Date De Début Effective "
+        />
+        <div class="form-group">
+          <input
+            type="text"
+            name="opposing_insurer"
+            id="opposing insurer"
+            class="form-control input-lg"
+            required
+            placeholder="Assureur adversaire"
+            maxlength="30"
+            min="{{now}}"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            pattern="[-+]?[0-9]*\.?[0-9]*"
+            title="Please Enter a Float Number"
+            required
+            class="form-control input-lg"
+            required
+            placeholder="Montant"
+          />
+        </div>
+        <div>
+
+        </div>
+      </fieldset>
+    
+
+        </div>
+</fieldset>	
+
+</div>     
+      <div class="modal-footer">
+        <button type="button" id="btn" style="background-color:grey;" data-dismiss="modal">Fermer</button>
+          <button
+            type="submit"
+            name="submit"
+            id="btn"
+            value="Ajouter"
+          >Valider</button>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>

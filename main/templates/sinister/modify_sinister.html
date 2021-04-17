@@ -1,0 +1,141 @@
+{% extends 'base_page.html' %} {% block body %}
+<div class="row">
+  <div class="col">
+    <br />
+    <a
+      class="btn btn-primary float-right"
+      href="{{url_for('client.display_client',id=session['client_id'],contract_id=session['contract_id'])}}"
+      role="button"
+      >fiche client</a
+    >
+  </div>
+</div>
+
+<div class="row" style="padding: 2%">
+  <div class="col" style="padding-left: 20%; padding-right: 20%">
+    <form
+      role="form"
+      method="post"
+      action="{{ url_for('sinister.modify_sinister',id=id,sinister_id=sinister_id)}}"
+    >
+      <fieldset>
+        <p class="text-uppercase pull-center">Modifier Sinistre.</p>
+        <div class="form-group">
+          <input
+            type="text"
+            name="description"
+            id="description"
+            class="form-control input-lg"
+            placeholder="Description"
+            value="{{sinister.description}}"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="opposing_insurer"
+            id="opposing_insurer"
+            class="form-control input-lg"
+            placeholder="Assureur adversaire"
+            value="{{sinister.opposing_insurer}}"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            pattern="[-+]?[0-9]*\.?[0-9]*"
+            title="Please Enter a Float Number"
+            class="form-control input-lg"
+            placeholder="Montant"
+            value="{{sinister.amount}}"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="date"
+            name="sinister_date"
+            id="sinister_date"
+            class="form-control input-lg"
+            value="{{sinister.sinister_date}}"
+          />
+        </div>
+        <div>
+          Statu
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value=""
+              checked
+            />
+            <label class="form-check-label"> None </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              disabled="disabled"
+              value="En Attente"
+            />
+            <label class="form-check-label"> En Attente </label>
+          </div>
+          {%if g.current_user[1]=='Manager'%}
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value="Valide"
+            />
+            <label class="form-check-label"> Valide </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value="Invalide"
+            />
+            <label class="form-check-label"> Invalide </label>
+          </div>
+          {%else%}
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              disabled="disabled"
+              name="status"
+              value="Invalide"
+            />
+            <label class="form-check-label"> Valide </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              disabled="disabled"
+              name="status"
+              value="Valide"
+            />
+            <label class="form-check-label"> Invalide </label>
+          </div>
+          {%endif%}
+        </div>
+        <div>
+          <input
+            type="submit"
+            name="submit"
+            class="btn btn-lg btn-primary"
+            value="Modifier"
+          />
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

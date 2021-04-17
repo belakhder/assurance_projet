@@ -1,0 +1,53 @@
+  <!-- Modal -->
+<div class="modal fade" id="info_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier Les Informations D'adresse.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <div  >
+<form role="form" method="post" action="{{ url_for('address.modify_client_address',id=id,address_id=address_info['id'])}}">
+  <fieldset >							
+      
+      <div class="form-group input-group-sm" >
+          <label >Ligne1</label>
+          <input type="line1" name="line1" class="form-control" maxlength="50" value="{{address_info['ligne1']}}" placeholder="Entrer La Ligne1">
+        </div>
+        <div class="form-group input-group-sm">
+          <label >Ligne2</label>
+          <input type="line2" name="line2" class="form-control" maxlength="50" value="{{address_info['ligne2']}}"  placeholder="Entrer La Ligne2">
+        </div>
+        <div class="form-group input-group-sm">
+          <label >Ville</label>
+          <input type="City" name= "city" class="form-control" maxlength="20"  value="{{address_info['ville']}}"  placeholder="Entrer La ville">
+        </div>
+        <div class="form-group input-group-sm">
+          <label >Etat</label>
+          <input type="text" name="state" class="form-control" maxlength="20" value="{{address_info['etat']}}"  placeholder="Entrer L'etat">
+        </div>
+        <div class="form-group input-group-sm">
+          <label >Code Postal </label>
+          <input type="text" name="postal_code" maxlength="20" pattern="[0-9]*" title="Please Enter  Numbers" class="form-control" value="{{address_info['code postal']}}"  placeholder="Entrer Le Code Postal ">
+        </div>
+        <div class="form-group input-group-sm">
+          <label >Pays</label>
+          <input type="Country" name="country" class="form-control" maxlength="20" value="{{address_info['pays']}}"  placeholder="Entrer pays">
+
+        </div>
+
+        </div>
+</fieldset>	
+
+</div>     
+      <div class="modal-footer">
+        <button type="button" id='btn' style="background-color: grey;" data-dismiss="modal">Fermer</button>
+<button type="submit" name="submit" id='btn'  value="Valider">Valider</button>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>

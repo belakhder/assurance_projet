@@ -1,0 +1,607 @@
+{% extends 'base_page.html'%} {% block body %} {% if success==True %}
+<div class="alert alert-success alert-dismissible fade show">
+  <strong>Success!</strong> registered customer, awaiting validation from the
+  manager
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{%endif%}
+
+<div class="container pt-5">
+  <h2 class="text-center" id="title">Souscription Company</h2>
+  <hr />
+  <form
+    id="myform"
+    action="{{ url_for('client.subscription_company')}}"
+    method="POST"
+  >
+    <div class="card">
+      <div class="row" id="wrapper">
+        <div class="col-md-4 card-body">
+          <h5 class="text-uppercase card-title">Informations client</h5>
+
+          <div class="form-group">
+            <label class="required">Nom de la société</label>
+
+            <input
+              name="company_name"
+              type="company_name"
+              class="form-control"
+              required
+              placeholder="Entrer Le Nom de la société"
+              maxlength="50"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Code de Registre De Commerce</label>
+
+            <input
+              name="company_registration_nb"
+              type="company_registration_nb"
+              class="form-control"
+              required
+              placeholder="Entrer Le Code de Registre De Commerce"
+              maxlength="100"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Type De Client</label>
+            <select type="text" class="form-control" name="client_type">
+              <option>Client Potentiel</option>
+              <option>Client</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="required">Email</label>
+
+            <input
+              type="email"
+              name="company_email"
+              class="form-control"
+              required
+              placeholder="Entrer L'adresse Email "
+              maxlength="100"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+
+          <div class="form-group">
+            <label class="required">Tel</label><br />
+
+            <input
+              input
+              type="tel"
+              name="phone"
+              id="phone"
+              class="form-control"
+              required
+            />
+            <span id="valid-msg" class="d-none" style="color: white"
+              >✓ Valid</span
+            >
+            <span id="error-msg" class="d-none" style="color: white"></span>
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+        </div>
+
+        <div class="col-md-4 card-body">
+          <h5 class="text-uppercase card-title">Informations D'adresse</h5>
+          <div class="form-group">
+            <label class="required">Ligne 1</label>
+
+            <input
+              type="line1"
+              name="line1"
+              class="form-control"
+              required
+              placeholder="Entrer Ligne 1"
+              maxlength="50"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label>Ligne 2</label>
+            <input
+              type="line2"
+              name="line2"
+              class="form-control"
+              placeholder="Entrer Ligne 2"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="required">Ville</label>
+            <input
+              type="City"
+              name="city"
+              class="form-control"
+              required
+              placeholder="Entrer La Ville"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="required">Etat</label>
+            <input
+              type="State"
+              name="state"
+              class="form-control"
+              required
+              placeholder="Entrer L'Etat"
+              maxlength="50"
+            />
+          </div>
+          <div class="form-group">
+            <label class="required">Code Postal</label>
+
+            <input
+              type="text"
+              name="postal_code"
+              pattern="[0-9]*"
+              class="form-control"
+              required
+              placeholder="Entrer Le Code postal"
+              maxlength="8"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label>Pays</label>
+
+            <input
+              type="Country"
+              name="country"
+              class="form-control"
+              placeholder="Entrer Le Pays "
+              maxlength="50"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-4 card-body">
+          <h5 class="text-uppercase card-title">Proposition de contrat</h5>
+          <div class="form-group">
+            <label class="required">Type De Contrat</label>
+            <select type="text" class="form-control" name="contract_type">
+              <option>type 1</option>
+              <option>type 2</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="required">Prix</label>
+
+            <input
+              type="number"
+              step="0.01"
+              id="price"
+              name="price"
+              class="form-control"
+              pattern="[-+]?[0-9]*\.?[0-9]*"
+              required
+              placeholder="Entrer Le Prix "
+              oninput="myFunction3()"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div>
+            <label class="required">Date De Début Effective</label>
+
+            <input
+              type="date"
+              id="start_date"
+              name="start_date"
+              id="datepicker"
+              class="form-control datepicker"
+              required
+              placeholder="Entrer La Date De Début Effective "
+              min="{{now}}"
+              oninput="date_de_cloture()"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Date De Clôture</label>
+
+            <input
+              type="date"
+              id="end_date"
+              name="end_date"
+              class="form-control"
+              required
+              placeholder="Entrer La Date de clôture "
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Nombre D'échéances</label>
+            <select
+              class="form-control"
+              type="number"
+              required
+              class="form-control wrong"
+              name="nb_inst"
+              pattern="[-+]?[0-9]*\.?[0-9]*"
+              title="Veuillez Saisir Un Nombre Flottant"
+              required
+              placeholder="Entrer le nombre d'échéances"
+              id="myCheck"
+              oninput="myFunction()"
+            >
+              {% for i in
+              range(0,(session['settings'][1]|int)+1,(session['settings'][0]|int))
+              %}
+              <option>{{i}}</option>
+              {%endfor%}
+            </select>
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+        </div>
+        <button
+          type="submit"
+          value="Souscrire"
+          id="text5"
+          style="display: none"
+        >
+          Souscrire
+        </button>
+      </div>
+    </div>
+    <div class="card" style="padding-top: 2%">
+      <div class="row" id="payment_row">
+        <div class="col-md-4 card-body" id="text2">
+          <h5 class="text-uppercase pull-center">Paiement</h5>
+          <div class="form-group">
+            <label>Montant</label>
+            <input
+              type="number"
+              id="payment_amount"
+              name="payment_amount"
+              id="amount"
+              step="0.01"
+              max="{{remaining_amount}}"
+              min="0"
+              pattern="[-+]?[0-9]*\.?[0-9]*"
+              title="Please Enter a Float Number"
+              class="form-control input-lg"
+              placeholder="Entrer Le Montant à Payer"
+              oninput="myFunction3()"
+            />
+          </div>
+          <div class="form-group">
+            <label>Mode de Paiement</label>
+            <select
+              type="text"
+              class="form-control"
+              id="payment_mode"
+              name="payment_mode"
+              required
+              oninput="myFunction2()"
+            >
+              <option>Cash</option>
+              <option>Chèque</option>
+              <option>Carte Bancaire</option>
+            </select>
+          </div>
+          <div class="form-group" id="nb_bank_check" style="display: none">
+            <label>Numéro Du Chèque</label>
+            <input
+              type="nb_bank_check"
+              name="nb_bank_check"
+              class="form-control"
+              placeholder="Entrer La réference Du Chèque Bancaire"
+              oninput="myFunction2()"
+            />
+          </div>
+          <div class="form-group" id="transaction_number" style="display: none">
+            <label>Numéro Du Transaction</label>
+            <input
+              type="transaction_number"
+              name="transaction_number"
+              class="form-control"
+              placeholder="Entrer La réference Du Transaction Bancaire"
+            />
+          </div>
+          <div class="form-group" id="card_number" style="display: none">
+            <label>Numéro De La Carte Bancaire</label>
+            <input
+              type="card_number"
+              name="card_number"
+              class="form-control"
+              placeholder="Entrer Le Numéro De La Carte Bancaire"
+            />
+          </div>
+          <div class="form-group" id="payor_last_name">
+            <label>Nom Payeur</label>
+            <input
+              type="payor_last_name"
+              name="payor_last_name"
+              class="form-control"
+              placeholder="Entrer Nom Du Payeur "
+            />
+          </div>
+          <div class="form-group" id="payor_name">
+            <label>Prénom Payeur</label>
+            <input
+              type="payor_name"
+              name="payor_name"
+              class="form-control"
+              placeholder="Entrer Prénom Du Payeur "
+            />
+          </div>
+          <div class="row pt-5 float-left">
+            <button type="submit" id="text6" value="Souscrire">
+              Souscrire
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="{{ url_for('static',filename='js/intlTelInput.js')}}"></script>
+<script>
+  var input = document.querySelector("#phone");
+
+  var iti = intlTelInput(input);
+  var countryData = iti.getSelectedCountryData();
+
+  // window.intlTelInput(input, {
+  //   // allowDropdown: false,
+  //   autoHideDialCode: false,
+  //   // autoPlaceholder: "off",
+  //   // dropdownContainer: document.body,
+  //   //excludeCountries: ["us"],
+  //   // formatOnDisplay: false,
+  //   geoIpLookup: function (callback) {
+  //     $.get("http://ipinfo.io", function () {}, "jsonp").always(function (
+  //       resp
+  //     ) {
+  //       var countryCode = resp && resp.country ? resp.country : "";
+  //       callback(countryCode);
+  //     });
+  //   },
+  //   hiddenInput: "full_number",
+  //   initialCountry: "tn",
+  //   // localizedCountries: { 'de': 'Deutschland' },
+  //   // nationalMode: false,
+  //   // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+  //   // placeholderNumberType: "MOBILE",
+  //   // preferredCountries: ['cn', 'jp'],
+  //   separateDialCode: true,
+  //   utilsScript: "{{ url_for('static',filename='js/utils.js')}}",
+  // });
+  var input = document.querySelector("#phone"),
+    errorMsg = document.querySelector("#error-msg"),
+    validMsg = document.querySelector("#valid-msg");
+
+  // here, the index maps to the error code returned from getValidationError - see readme
+  var errorMap = [
+    "Invalid number",
+    "Invalid country code",
+    "Too short",
+    "Too long",
+    "Invalid number",
+  ];
+
+  // initialise plugin
+  var iti = window.intlTelInput(input, {
+    geoIpLookup: function (callback) {
+      $.get("http://ipinfo.io", function () {}, "jsonp").always(function (
+        resp
+      ) {
+        var countryCode = resp && resp.country ? resp.country : "";
+        callback(countryCode);
+      });
+    },
+    initialCountry: "tn",
+    hiddenInput: "full_number",
+    utilsScript: "{{ url_for('static',filename='js/utils.js')}}",
+  });
+
+  var reset = function () {
+    input.classList.remove("error");
+    errorMsg.innerHTML = "";
+    errorMsg.classList.add("d-none");
+    validMsg.classList.add("d-none");
+  };
+
+  // on blur: validate
+  input.addEventListener("keyup", function () {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+      }
+    }
+  });
+  input.addEventListener("countrychange", function () {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+      }
+    }
+  });
+  var frm = document.getElementById("myform");
+  frm.addEventListener("submit", function (e) {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+
+        e.preventDefault();
+        errorMsg.classList.add("alert");
+        errorMsg.classList.add("alert-danger");
+      }
+    }
+  });
+
+  // on keyup / change flag: reset
+  input.addEventListener("change", reset);
+  //input.addEventListener("keyup", reset);
+
+  // input.addEventListener("countrychange", function () {
+  //   // do something with iti.getSelectedCountryData()
+  //   var countryData = iti.getSelectedCountryData();
+
+  //   code = countryData.dialCode;
+  //   input.value = code;
+  // });
+  function validateForm() {
+    var input = document.querySelector("#phone");
+    var x = "";
+    if (x == "") {
+      input.addClass("wrong");
+      alert("Name must be filled out");
+
+      return false;
+    }
+  }
+  function myFunction() {
+    var checkBox = document.getElementById("myCheck").value;
+
+    var text2 = document.getElementById("text2");
+    var payment_row = document.getElementById("payment_row");
+    var text5 = document.getElementById("text5");
+    var text6 = document.getElementById("text6");
+    var text3 = document.getElementById("payment_amount");
+    var price = document.getElementById("price");
+    if (checkBox == 0) {
+      text3.value = price.value;
+      text2.style.display = "block";
+      text5.style.display = "none";
+      text6.style.display = "block";
+      payment_row.style.display = "block";
+    } else {
+      text6.style.display = "none";
+      text2.style.display = "none";
+      payment_row.style.display = "none";
+      text5.style.display = "block";
+    }
+  }
+
+  function myFunction2() {
+    var payment_mode = document.getElementById("payment_mode").value;
+
+    var nb_bank_check = document.getElementById("nb_bank_check");
+    var transaction_number = document.getElementById("transaction_number");
+    var card_number = document.getElementById("card_number");
+
+    if (payment_mode == "Chèque") {
+      nb_bank_check.style.display = "block";
+    } else if (payment_mode == "Carte Bancaire") {
+      nb_bank_check.required = false;
+      transaction_number.style.display = "block";
+
+      card_number.style.display = "block";
+
+      nb_bank_check.style.display = "none";
+    } else if (payment_mode == "Cash") {
+      nb_bank_check.required = false;
+      card_number.required = false;
+      transaction_number.required = false;
+      transaction_number.style.display = "none";
+      card_number.style.display = "none";
+      nb_bank_check.style.display = "none";
+    } else {
+      nb_bank_check.required = false;
+      card_number.required = false;
+      transaction_number.required = false;
+      nb_bank_check.style.display = "none";
+      card_number.style.display = "none";
+      transaction_number.style.display = "none";
+    }
+  }
+  function myFunction3() {
+    var payment_amount = document.getElementById("payment_amount");
+    var max_payment_amount = document.getElementById("payment_amount").max;
+    var min_payment_amount = document.getElementById("payment_amount").min;
+    var price = document.getElementById("price");
+    if (
+      payment_amount.style.display != "none" &&
+      payment_amount.value != price.value
+    ) {
+      payment_amount.value = price.value;
+      max_payment_amount = price.value;
+      min_payment_amount = price.value;
+    } else {
+      payment_amount.value = 0;
+    }
+  }
+
+  function date_de_cloture() {
+    var end_date = document.getElementById("end_date");
+    const start_date = document.getElementById("start_date").value;
+    end_date.min = start_date;
+  }
+</script>
+
+{%endblock%}

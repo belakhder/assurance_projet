@@ -1,0 +1,137 @@
+<div class="form-group">
+  <label>Référence Client</label>
+  <input
+    type="text"
+    name="client_id"
+    class="form-control"
+    placeholder="Entrer La Référence Client"
+  />
+</div>
+<div class="form-group">
+  <label>Référence Contrat</label>
+  <input
+    type="text"
+    name="contract_id"
+    class="form-control"
+    placeholder="Entrer La Référence Contrat"
+  />
+</div>
+
+<div class="form-group">
+  <label>Payment_mode </label>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="Payment_mode"
+      checked
+      value=""
+    />
+    <label class="form-check-label"> All </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="Payment_mode"
+      value="Cash"
+    />
+    <label class="form-check-label"> Cash </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="Payment_mode"
+      value="Chèque"
+    />
+    <label class="form-check-label"> Chèque </label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="Payment_mode"
+      value="Carte Bancaire"
+    />
+
+    <label class="form-check-label"> Carte Bancaire </label>
+  </div>
+  <br />
+  <div class="form-group">
+    <label>Référence chèque</label>
+    <input
+      type="text"
+      name="nb_bank_check"
+      class="form-control"
+      placeholder="Entrer La Référence Du Chèque"
+    />
+  </div>
+  <div class="form-group">
+    <label>Référence Transaction</label>
+    <input
+      type="text"
+      name="transaction_number"
+      class="form-control"
+      placeholder="Entrer La Référence Du Transaction"
+    />
+  </div>
+  <div class="form-group">
+    <label>Numéro De La carte bancaire</label>
+    <input
+      type="text"
+      name="card_number"
+      class="form-control"
+      placeholder="Entrer Le Numéro De la Carte Bancaire"
+    />
+  </div>
+  <div class="form-group">
+    <label>Nom Du Payeur</label>
+    <input
+      type="text"
+      name="payor_last_name"
+      class="form-control"
+      placeholder="Entrer Le Nom Du Payeur"
+    />
+  </div>
+  <div class="form-group">
+    <label>Prénom Du Payeur</label>
+    <input
+      type="text"
+      name="payor_name"
+      class="form-control"
+      placeholder="Entrer Le Prénom Du Payeur"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <label>Type de date</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="date_type"
+        value=""
+        checked
+      />
+      <label class="form-check-label"> All </label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="date_type"
+        value="payment_date"
+      />
+      <label class="form-check-label"> Date De Paiement </label>
+    </div>
+  </div>
+  <br />
+
+  <div class="form-group">
+    <label> Range Date</label>
+    <br />
+    <input type="text2" id="daterange" name="daterange" />
+  </div>
+</div>

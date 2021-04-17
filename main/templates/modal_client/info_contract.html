@@ -1,0 +1,104 @@
+  <!-- Modal -->
+<div class="modal fade" id="info_contract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier Les Informations De Contract.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <form role="form" method="post" action="{{ url_for('contract.modify_client_contract',id=id,contract_id=contract_id)}}">
+                <fieldset>							
+                    <p class="text-camelcase">modier informations contrat </p>	
+                    <div class="form-group">
+                        <label >Date De Création</label>
+                        <input type="Date" id="creation_date" name="creation_date" class="form-control" disabled="disabled" >
+                    </div> 
+                      <div class="form-group">
+                        <label >date de clôture</label>
+                        <input type="Date" id="end_date"  name="end_date" class="form-control" disabled="disabled" >
+                    </div>                       
+                    <div class="form-group">
+                        <label >Montant</label>
+                        <input type="Price" id="amount" name="price" class="form-control" pattern=[-+]?[0-9]*\.?[0-9]* title="Please Enter a Float Number"  placeholder="Enter Price" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label >Select Contract type</label>
+                        <select class="form-control" id="contract_type" name="contract_type" disabled="disabled" >
+                        <option ></option>
+                        <option >type 1</option>
+                        <option >type 2</option>
+                        <option >type 3</option>
+                        <option >type 4</option>
+                        </select>
+                    </div>
+                    <div >Status 
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"  id="none_status" name="status"  value="" checked>
+                            <label class="form-check-label" >
+                            None
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="en_cours_status" name="status" disabled="disabled" value="En Cours" >
+                            <label class="form-check-label" >
+                            En Cours
+                            </label>
+                         </div>
+                        {%if g.current_user[1]=='Manager'%}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="active_status" name="status"  value="Activé" >
+                            <label class="form-check-label">
+                            Activé
+                            </label>
+                        </div>
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="résilié_status" name="status"  value="Résilié" >
+                        <label class="form-check-label" >
+                        Résilié
+                        </label>
+                    </div>
+                                    <div class="form-check">
+                    <input class="form-check-input" type="radio" id="annulé_status"  name="status"  value="Annulé" >
+                    <label class="form-check-label" >
+                    Annulé
+                    </label>
+                </div>
+                    {%else%}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="activé_status" name="status" value="Activé" >
+                        <label class="form-check-label">
+                        Activé
+                        </label>
+                    </div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="résilié_status"  name="status"  value="Résilié" >
+                    <label class="form-check-label" >
+                    Résilié
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="annulé_status"  name="status"  value="Annulé" >
+                    <label class="form-check-label" >
+                    Annulé
+                    </label>
+                </div>
+                {%endif%}
+                </div>
+
+            </fieldset>	
+           
+  </div>     
+      <div class="modal-footer">
+        <button type="button" id='btn' style="background-color:grey;" data-dismiss="modal">Fermer</button>
+<button type="submit" name="submit" id='btn'  value="modify">Valider</button>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>

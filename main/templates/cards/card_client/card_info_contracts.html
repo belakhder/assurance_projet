@@ -1,0 +1,94 @@
+<div class="card" style="padding: 2.5%; margin: 2.5%">
+  <h5>Contrats client</h5>
+  <br />
+  {%if id%}
+  <div>
+    <a id="instalment" href="#payments" role="button">échéances</a>
+  </div>
+  <br />
+  {% endif %}
+  <div class="row">
+    {% if contracts[0]['id']!=None %}
+
+    <div
+      class="col-sm"
+      class="table-wrapper-scroll-y my-custom-scrollbar"
+      style="position: relative; height:{{(contracts|length)*50+90}}px ;max-height: 200px; overflow: auto;"
+    >
+      <table
+        class="table table-striped table-responsive-md btn-table"
+        style="display: block"
+        id="tablewrapper"
+      >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            {% for name in contracts[0].keys() %}
+
+            <th scope="col" style="width: 500px">{{name}}</th>
+            {%endfor%}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for contract in contracts %} {% if contract['id']!=None %} {% if
+          current_contract_value== contract['id'] %}
+
+          <tr
+            style="background-color: #007bff; color: white"
+            class="contract_button"
+          >
+            <th scope="row">{{loop.index}}</th>
+
+            <td>{{contract['id']}}</td>
+            <td>{{contract['date de création']}}</td>
+            <td>{{contract['date de début effective']}}</td>
+            <td>{{contract['date de clôture']}}</td>
+            <td>{{contract['prix']}}</td>
+            <td>{{contract['type de contrat']}}</td>
+            <td id="current_status">{{contract['statu']}}</td>
+
+            <td>
+              <button
+                class="btn fiche"
+                data-toggle="modal"
+                data-target="#info_contract"
+                style="background-color: rgb(255, 255, 255); color: #007bff"
+                class="btn fiche btn-primary"
+                value="{{url_for('contract.modify_client_contract',id=id,contract_id=contract['id'])}}"
+                role="button"
+              >
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+            </td>
+
+            {%else%}
+          </tr>
+
+          <tr
+            class="clickable-row contract_button"
+            data-href="{{url_for('client.display_client',id=id,contract_id=contract['id'])}}"
+          >
+            <th scope="row">{{loop.index}}</th>
+
+            <td>{{contract['id']}}</td>
+            <td>{{contract['date de création']}}</td>
+            <td>{{contract['date de début effective']}}</td>
+            <td>{{contract['date de clôture']}}</td>
+            <td>{{contract['prix']}}</td>
+            <td>{{contract['type de contrat']}}</td>
+            <td>{{contract['statu']}}</td>
+
+            {%if contract['id']%}
+            <td></td>
+            {%endif%}
+          </tr>
+          {%endif%} {%endif%} {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%else%}
+  <div>Le Client N'a Pas De Contrat</div>
+  {% endif %}
+</div>

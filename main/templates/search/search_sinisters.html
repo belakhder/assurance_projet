@@ -1,0 +1,307 @@
+{% extends 'base_page.html'%} {% block body %}
+
+<div class="container pt-5">
+  <h1 class="text-center">Critères de recherche</h1>
+  <br /><br /><br />
+  <div class="row" id="wrapper" style="width: 100%; margin: auto">
+    <div class="contact-form">
+      <div class="col input-fields">
+        <h5>Informations client</h5>
+        <form action="{{ url_for('sinister.search_sinisters')}}" method="POST">
+          <div class="form-group">
+            <label>Assureur adversaire</label>
+            <input
+              type="text"
+              name="opposing_insurer"
+              class="form-control"
+              placeholder="Entrer Le Nom d'assureur"
+            />
+          </div>
+          <div class="form-group">
+            <label>Montant</label>
+            <input
+              type="text"
+              name="amount"
+              class="form-control"
+              placeholder="Entrer Le Montant"
+            />
+          </div>
+          <div class="form-group">
+            <label>Référence Client </label>
+            <input
+              type="text"
+              name="client_id"
+              class="form-control"
+              placeholder="Entrer la Référence client"
+            />
+          </div>
+          
+
+            <div class="form-group">
+              <label> type de date</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="date_type"
+                  value=""
+                  checked
+                />
+                <label class="form-check-label"> All </label>
+              </div>
+
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="date_type"
+                  value="creation_date"
+                />
+                <label class="form-check-label"> Date de Création </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="date_type"
+                  value="closing_date"
+                />
+                <label class="form-check-label"> Date De Clôture </label>
+              </div>
+            </div>
+            <br />
+            <div class="form-group">
+              <label> Range Date</label>
+              <br />
+              <input type="text2" id="daterange" name="daterange" />
+            </div>
+            <div class="form-group">
+              <label>Statu</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  value=""
+                  checked
+                />
+                <label class="form-check-label"> toutes </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  value="Valide"
+                />
+                <label class="form-check-label"> Valide </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  value="Invalide"
+                />
+                <label class="form-check-label"> Invalide </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  value="En Attente"
+                />
+                <label class="form-check-label"> En Attente </label>
+              </div>
+              </DIV>
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="float-right">
+                  <input
+                    type="submit"
+                    name="submit"
+                    id="btn"
+                    value="Chercher"
+                  />
+                </div>
+              </div>
+          </div>
+
+        </form>
+    </div>
+    <br><br><br>
+</div>
+</div>
+        {% if search_result %}
+        <div class="container pt-5">
+          <h5>Search result</h5>
+          <form
+            role="form"
+            method="post"
+            action="{{ url_for('client.dwlcsv',file_name='search_sinister_result')}}"
+          >
+            <div>
+              <button id="button" type="submit" name="submit" value="export">
+                csv
+              </button>
+            </div>
+          </form>
+          <table
+            class="table table-striped table-responsive-md btn-table"
+            style="padding: 2.5%"
+            id="tablewrapper"
+          >
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                {% for name in columns %}
+
+                <th scope="col">{{name}}</th>
+                {%endfor%}
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for row in search_result %}
+
+              <tr>
+                <th scope="row">{{loop.index+(nb*(page-1))}}</th>
+
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td>
+                    {%if row[7][0] !='s' %}
+                  <a
+                  
+                    class="btn"
+                    href="{{url_for('client.display_client',id=row[7],contract_id=row[9])}}"
+                    class="text-center"
+                    role="button"
+                    ><i class="fa fa-address-card fa-2x fa-border-none" style="color: white" aria-hidden="true" ></i ></a
+                  >
+                  {%else%}
+                  <a
+                  
+                  class="btn"
+                  href="{{url_for('client.display_company',id=row[7],contract_id=row[9])}}"
+                  class="text-center"
+                  role="button"
+                  ><i class="fa fa-building fa-2x" style="color: white;" aria-hidden="true"></i></a
+                >
+                {%endif%}
+                </td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+        {% if max_pages %}
+
+        <nav class="nav justify-content-center">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="{{link_previous}}">Précédent</a>
+            </li>
+            {%if page < 3 %} {%for i in range(([max_pages,5]|sort)[0])%}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="{{url_for('sinister.search_result_',search_dict=search_dict,page=i+1)}}"
+                >{{i+1}}</a
+              >
+            </li>
+            {%endfor%} {% elif page >= 3 and page+2 <= max_pages %} {%for i in
+            range(-2,3,1)%}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="{{url_for('sinister.search_result_',search_dict=search_dict,page=page+i)}}"
+                >{{page+i}}</a
+              >
+            </li>
+            {%endfor%} {% elif 3 <= page <=4 and max_pages <=5 %} {%for i in
+            range(max_pages)%}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="{{url_for('sinister.search_result_',search_dict=search_dict,page=i+1)}}"
+                >{{i+1}}</a
+              >
+            </li>
+            {%endfor%} {% elif page >= 3 and page+2 > max_pages %} {%for i in
+            range(max_pages-4,max_pages+1,1)%}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="{{url_for('sinister.search_result_',search_dict=search_dict,page=i)}}"
+                >{{i}}</a
+              >
+            </li>
+            {%endfor%} {%endif%}
+
+            <li class="page-item">
+              <a class="page-link" href="{{link_next}}">Suivant</a>
+            </li>
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+      <br />
+    </div>
+  </div>
+  <script>
+    $(function () {
+      $('input[name="daterange"]').daterangepicker(
+        {
+          locale: {
+            format: "DD/MM/YYYY",
+            separator: " - ",
+            applyLabel: "Valider",
+            cancelLabel: "Annuler",
+            fromLabel: "De",
+            toLabel: "à",
+            customRangeLabel: "Custom",
+            daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            monthNames: [
+              "Janvier",
+              "Février",
+              "Mars",
+              "Avril",
+              "Mai",
+              "Juin",
+              "Juillet",
+              "Août",
+              "Septembre",
+              "Octobre",
+              "Novembre",
+              "Décembre",
+            ],
+            firstDay: 1,
+          },
+          opens: "right",
+        },
+        function (start, end, label) {
+          var range = document.getElementById("daterange");
+          range.value =
+            start.format("DD-MM-YYYY") + "-" + end.format("DD-MM-YYYY");
+          console.log(
+            "A new date selection was made: " +
+              start.format("DD-MM-YYYY") +
+              " to " +
+              end.format("DD-MM-YYYY")
+          );
+        }
+      );
+    });
+  </script>
+  {% endblock %}
+</div>

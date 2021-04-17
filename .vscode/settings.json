@@ -1,0 +1,46 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "192.168.12.115",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "username": "user2",
+            "password": "fathi",
+            "database": "test8",
+            "name": "db_test8"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "localhost",
+            "password": "postgres",
+            "username": "postgres",
+            "database": "test8"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "database7",
+            "database": "db7",
+            "username": "postgres",
+            "password": "emnadegachi"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "db7",
+            "database": "db7",
+            "username": "postgres",
+            "password": "emnadegachi"
+        }
+    ],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

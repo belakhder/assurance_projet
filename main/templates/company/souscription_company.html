@@ -1,0 +1,457 @@
+{% extends 'base_page.html'%} {% block body %} {% if success==True %}
+<div class="alert alert-success alert-dismissible fade show">
+  <strong>Success!</strong> registered customer, awaiting validation from the
+  manager
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{%endif%}
+
+<div class="container pt-5">
+  <h2 class="text-center" id="title">Souscription Company</h2>
+  <hr />
+  <form
+    id="myform"
+    action="{{ url_for('client.subscription_company')}}"
+    method="POST"
+  >
+    <div class="card">
+      <div class="row" id="wrapper">
+        <div class="col-6 card-body">
+          <h5 class="text-uppercase card-title">Informations client</h5>
+
+          <div class="form-group">
+            <label class="required">Nom de la société</label>
+
+            <input
+              name="company_name"
+              type="company_name"
+              class="form-control"
+              required
+              placeholder="Entrer Le Nom de la société"
+              maxlength="50"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Code de Registre De Commerce</label>
+
+            <input
+              name="company_registration_nb"
+              type="company_registration_nb"
+              class="form-control"
+              required
+              placeholder="Entrer Le Code de Registre De Commerce"
+              maxlength="100"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label class="required">Type De Client</label>
+            <select
+              type="text"
+              class="form-control"
+              name="client_type"
+              id="client_type2"
+              oninput="client()"
+            >
+              <option>Client</option>
+              <option>Client Potentiel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="required">Email</label>
+
+            <input
+              type="email"
+              name="company_email"
+              class="form-control"
+              required
+              placeholder="Entrer L'adresse Email "
+              maxlength="100"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+
+          <div class="form-group">
+            <label class="required">Tel</label><br />
+
+            <input
+              input
+              type="tel"
+              name="phone"
+              id="phone"
+              class="form-control"
+              required
+            />
+            <span id="valid-msg" class="d-none" style="color: white"
+              >✓ Valid</span
+            >
+            <span id="error-msg" class="d-none" style="color: white"></span>
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+        </div>
+
+        <div class="col-6 card-body">
+          <h5 class="text-uppercase card-title">Informations D'adresse</h5>
+          <div class="form-group">
+            <label class="required">Ligne 1</label>
+
+            <input
+              type="line1"
+              name="line1"
+              class="form-control"
+              required
+              placeholder="Entrer Ligne 1"
+              maxlength="50"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label>Ligne 2</label>
+            <input
+              type="line2"
+              name="line2"
+              class="form-control"
+              placeholder="Entrer Ligne 2"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="required">Ville</label>
+            <input
+              type="City"
+              name="city"
+              class="form-control"
+              required
+              placeholder="Entrer La Ville"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="required">Etat</label>
+            <input
+              type="State"
+              name="state"
+              class="form-control"
+              required
+              placeholder="Entrer L'Etat"
+              maxlength="50"
+            />
+          </div>
+          <div class="form-group">
+            <label class="required">Code Postal</label>
+
+            <input
+              type="text"
+              name="postal_code"
+              pattern="[0-9]*"
+              class="form-control"
+              required
+              placeholder="Entrer Le Code postal"
+              maxlength="8"
+            />
+            <style>
+              .required:after {
+                content: " *";
+                color: red;
+              }
+            </style>
+          </div>
+          <div class="form-group">
+            <label>Pays</label>
+
+            <input
+              type="Country"
+              name="country"
+              class="form-control"
+              placeholder="Entrer Le Pays "
+              maxlength="50"
+            />
+          </div>
+          <div class="row pt-5 float-left">
+            <button
+              type="submit"
+              id="text6"
+              style="display: none"
+              value="Souscrire"
+            >
+              Souscrire
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding-top: 2%">
+      <div class="row" id="payment_row">
+        <div class="col-6 card-body">
+          {% include 'client/contract_propo.html' %}
+          <div class="row pt-5 float-left">
+            <button type="submit" id="text6" value="Souscrire">
+              Souscrire
+            </button>
+          </div>
+        </div>
+        <div class="col-6 card-body" id="text2">
+          {% include 'client/payment_propo.html' %}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<br /><br /><br />
+<script src="{{ url_for('static',filename='js/intlTelInput.js')}}"></script>
+<script>
+  var input = document.querySelector("#phone");
+
+  var iti = intlTelInput(input);
+  var countryData = iti.getSelectedCountryData();
+
+  // window.intlTelInput(input, {
+  //   // allowDropdown: false,
+  //   autoHideDialCode: false,
+  //   // autoPlaceholder: "off",
+  //   // dropdownContainer: document.body,
+  //   //excludeCountries: ["us"],
+  //   // formatOnDisplay: false,
+  //   geoIpLookup: function (callback) {
+  //     $.get("http://ipinfo.io", function () {}, "jsonp").always(function (
+  //       resp
+  //     ) {
+  //       var countryCode = resp && resp.country ? resp.country : "";
+  //       callback(countryCode);
+  //     });
+  //   },
+  //   hiddenInput: "full_number",
+  //   initialCountry: "tn",
+  //   // localizedCountries: { 'de': 'Deutschland' },
+  //   // nationalMode: false,
+  //   // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+  //   // placeholderNumberType: "MOBILE",
+  //   // preferredCountries: ['cn', 'jp'],
+  //   separateDialCode: true,
+  //   utilsScript: "{{ url_for('static',filename='js/utils.js')}}",
+  // });
+  var input = document.querySelector("#phone"),
+    errorMsg = document.querySelector("#error-msg"),
+    validMsg = document.querySelector("#valid-msg");
+
+  // here, the index maps to the error code returned from getValidationError - see readme
+  var errorMap = [
+    "Invalid number",
+    "Invalid country code",
+    "Too short",
+    "Too long",
+    "Invalid number",
+  ];
+
+  // initialise plugin
+  var iti = window.intlTelInput(input, {
+    geoIpLookup: function (callback) {
+      $.get("http://ipinfo.io", function () {}, "jsonp").always(function (
+        resp
+      ) {
+        var countryCode = resp && resp.country ? resp.country : "";
+        callback(countryCode);
+      });
+    },
+    initialCountry: "tn",
+    hiddenInput: "full_number",
+    utilsScript: "{{ url_for('static',filename='js/utils.js')}}",
+  });
+
+  var reset = function () {
+    input.classList.remove("error");
+    errorMsg.innerHTML = "";
+    errorMsg.classList.add("d-none");
+    validMsg.classList.add("d-none");
+  };
+
+  // on blur: validate
+  input.addEventListener("keyup", function () {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+      }
+    }
+  });
+  input.addEventListener("countrychange", function () {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+      }
+    }
+  });
+  var frm = document.getElementById("myform");
+  frm.addEventListener("submit", function (e) {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("d-none");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("d-none");
+
+        e.preventDefault();
+        errorMsg.classList.add("alert");
+        errorMsg.classList.add("alert-danger");
+      }
+    }
+  });
+
+  // on keyup / change flag: reset
+  input.addEventListener("change", reset);
+  //input.addEventListener("keyup", reset);
+
+  // input.addEventListener("countrychange", function () {
+  //   // do something with iti.getSelectedCountryData()
+  //   var countryData = iti.getSelectedCountryData();
+
+  //   code = countryData.dialCode;
+  //   input.value = code;
+  // });
+  function validateForm() {
+    var input = document.querySelector("#phone");
+    var x = "";
+    if (x == "") {
+      input.addClass("wrong");
+      alert("Name must be filled out");
+
+      return false;
+    }
+  }
+  function myFunction() {
+    var checkBox = document.getElementById("myCheck").value;
+    var checkBox2 = $("#client_type2");
+    console.log(checkBox2.val());
+
+    var text2 = document.getElementById("text2");
+    var payment_row = document.getElementById("payment_row");
+    var text5 = document.getElementById("text5");
+
+    var text3 = document.getElementById("payment_amount");
+    var price = document.getElementById("price");
+
+    if (checkBox == 0) {
+      text3.value = price.value;
+      text2.style.display = "block";
+      text5.style.display = "none";
+    } else {
+      text2.style.display = "none";
+
+      text5.style.display = "block";
+    }
+  }
+
+  function client() {
+    var checkBox2 = $("#client_type2");
+    console.log(checkBox2.val());
+    var text6 = document.getElementById("text6");
+    if (checkBox2.val() == "Client Potentiel") {
+      payment_row.classList.add("d-none");
+      text6.style.display = "block";
+    } else {
+      payment_row.classList.remove("d-none");
+      text6.style.display = "none";
+    }
+  }
+
+  function myFunction2() {
+    var payment_mode = document.getElementById("payment_mode").value;
+
+    var nb_bank_check = document.getElementById("nb_bank_check");
+    var transaction_number = document.getElementById("transaction_number");
+    var card_number = document.getElementById("card_number");
+
+    if (payment_mode == "Chèque") {
+      nb_bank_check.style.display = "block";
+    } else if (payment_mode == "Carte Bancaire") {
+      nb_bank_check.required = false;
+      transaction_number.style.display = "block";
+
+      card_number.style.display = "block";
+
+      nb_bank_check.style.display = "none";
+    } else if (payment_mode == "Cash") {
+      nb_bank_check.required = false;
+      card_number.required = false;
+      transaction_number.required = false;
+      transaction_number.style.display = "none";
+      card_number.style.display = "none";
+      nb_bank_check.style.display = "none";
+    } else {
+      nb_bank_check.required = false;
+      card_number.required = false;
+      transaction_number.required = false;
+      nb_bank_check.style.display = "none";
+      card_number.style.display = "none";
+      transaction_number.style.display = "none";
+    }
+  }
+  function myFunction3() {
+    var payment_amount = document.getElementById("payment_amount");
+    var max_payment_amount = document.getElementById("payment_amount").max;
+    var min_payment_amount = document.getElementById("payment_amount").min;
+    var price = document.getElementById("price");
+    if (
+      payment_amount.style.display != "none" &&
+      payment_amount.value != price.value
+    ) {
+      payment_amount.value = price.value;
+      max_payment_amount = price.value;
+      min_payment_amount = price.value;
+    } else {
+      payment_amount.value = 0;
+    }
+  }
+
+  function date_de_cloture() {
+    var end_date = document.getElementById("end_date");
+    const start_date = document.getElementById("start_date").value;
+    end_date.min = start_date;
+  }
+  var text5 = document.getElementById("payment_row");
+  console.log(text5);
+</script>
+
+{%endblock%}

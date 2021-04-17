@@ -1,0 +1,61 @@
+<div class="card" style="padding: 2.5%; margin: 0.5%">
+  <h5>Historique des indemnités</h5>
+  <div class="row">
+    {% if indemnity %}
+
+    <div
+      class="col-sm"
+      class="table-wrapper-scroll-y my-custom-scrollbar"
+      style="position: relative; max-height: 200px; overflow: auto"
+    >
+      <table
+        class="table table-striped table-responsive-md btn-table"
+        id="tablewrapper"
+        style="display: block"
+      >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            {% for name in indemnity[0].keys() %}
+            <th scope="col" style="width: 500px">{{name}}</th>
+            {%endfor%}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in indemnity %} {% if row['id']!=None %}
+
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+
+            <td>{{row['id']}}</td>
+            <td>{{row['Sinistre']}}</td>
+            <td>{{row['Montant']}}</td>
+            <td>{{row['Statu']}}</td>
+            <td>{{row['Date de création']}}</td>
+            <td>
+              <button
+                data-toggle="modal"
+                class="indemnity_button"
+                href="#info_indemnity"
+                value="{{url_for('indemnity.modify_indemnity',id=id,indemnity_id=row['id'])}}"
+                role="button"
+                style="background: transparent"
+              >
+                <i
+                  class="fa fa-pencil"
+                  style="color: #c5ecfd"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </td>
+          </tr>
+          {%endif%} {%endfor%}
+        </tbody>
+      </table>
+    </div>
+    {%else%}
+    <div style="padding: 15px">Le client N'a Aucune Indemnité</div>
+    {% endif %}
+  </div>
+</div>

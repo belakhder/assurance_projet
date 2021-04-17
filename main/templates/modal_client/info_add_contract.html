@@ -1,0 +1,188 @@
+
+  <!-- Modal -->
+<div class="modal fade" id="info_add_contract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Souscrire Un Contrat</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form role="form" method="post" action="{{ url_for('contract.add_client_contract',id=id)}}">
+        <div class="row">
+            <div class="col">
+                <fieldset>							
+                    <p class="text-uppercase">informations contrat </p>	 
+                                      
+                    <div class="form-group">
+                        <label class="required" >Type De Contrat</label>
+                        <select type="text" class="form-control" name="contract_type" >
+                        <option>type 1</option>
+                        <option>type 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" >Prix</label>
+                        <input type="number" id="price" name="price" step="0.01" title="Veuillez Saisir Un Nombre Flottant à deux chiffres aprés virgule" class="form-control" pattern=[-+]?[0-9]*\.?[0-9]* required   placeholder="Entrer Le Prix " oninput="myFunction3()">
+                    <style>.required:after {content:" *"; color: red;} </style>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" >Date De Début Effective</label>
+                        
+                        <input type="date" id="start_date" name="start_date" class="form-control" required  placeholder="Entrer La Date De Début Effective " min="{{now}}" oninput="date_de_cloture()">
+                    <style>.required:after {content:" *"; color: red;} </style>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" >Date De Clôture</label>
+                        
+                        <input type="date" id="end_date" name="end_date" class="form-control" required  placeholder="Entrer La Date de clôture"  oninput="date_de_cloture()">
+                    <style>.required:after {content:" *"; color: red;} </style>
+                    </div>
+                    <div class="form-group">
+                      <label class="required">Nombre D'échéances</label>
+                      <select class="form-control" type="number"  required class="form-control" name="nb_inst" pattern=[-+]?[0-9]*\.?[0-9]* title="Veuillez Saisir Un Nombre Flottant" required placeholder="Entrer le nombre d'échéances" id="myCheck" oninput="myFunction()">
+                        {% for i in range(0,(session['settings'][1]|int)+1,session['settings'][0]|int) %}
+                        <option>{{i}}</option>
+                        {%endfor%}
+                      </select>
+                      <style>.required:after {content:" *"; color: red;} </style>
+                    </div>
+
+                </fieldset>	
+            </div>
+            <div class="col"  >
+                <div id="text2" >			
+                <p class="text-uppercase">Paiement</p>	
+                <div class="form-group">
+                    <label >Montant</label>
+                    <input type="number" id="payment_amount"  name="payment_amount" id="amount" step="0.01" max="{{remaining_amount}}" min="0" pattern=[-+]?[0-9]*\.?[0-9]* title="Please Enter a Float Number" class="form-control input-lg" placeholder="Entrer Le Montant à Payer" oninput="myFunction3()">
+                </div>
+                <div class="form-group">
+                    <label  >Mode de Paiement</label>
+                    <select type="text" class="form-control" id="payment_mode" name="payment_mode" required  oninput="myFunction2()">
+                    <option>Cash</option>
+                    <option>Chèque</option>
+                    <option>Carte Bancaire</option>
+                    </select>
+                </div>
+                <div class="form-group" id="nb_bank_check" style="display: none;">
+                    <label >Numéro Du Chèque</label>
+                    <input type="nb_bank_check"  name= "nb_bank_check" class="form-control" maxlength="50" placeholder="Entrer La réference Du Chèque Bancaire" oninput="myFunction2()">
+                </div>
+                <div class="form-group" id="transaction_number" style="display: none;">
+                    <label >Numéro Du Transaction</label>
+                    <input type="transaction_number"  name="transaction_number" maxlength="50" class="form-control"  placeholder="Entrer La réference Du Transaction Bancaire">
+                </div>
+                <div class="form-group" id="card_number" style="display: none;">
+                    <label >Numéro De La Carte Bancaire</label>
+                    <input type="text"   name="card_number" class="form-control"  maxlength="50" placeholder="Entrer Le Numéro De La Carte Bancaire">
+                </div>
+                <div class="form-group" id="payor_last_name">
+                    <label >Nom Payeur</label>
+                    <input type="payor_last_name" name="payor_last_name" maxlength="20" class="form-control"  placeholder="Entrer Nom Du Payeur ">
+                </div>
+                <div class="form-group" id="payor_name">
+                    <label >Prénom Payeur</label>
+                    <input type="payor_name" name="payor_name"  class="form-control" maxlength="20"  placeholder="Entrer Prénom Du Payeur ">
+                </div>
+            </div>
+            </div>
+        </div> 
+
+    </div>
+
+      <div class="modal-footer">
+        <button type="button" id='btn' style="background-color:grey;" data-dismiss="modal">Fermer</button>
+           <button type="submit" id='btn' value="Souscrire">Valider</button>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+
+
+</div>     
+
+
+
+<script>
+function myFunction() {
+  var checkBox = document.getElementById("myCheck").value;
+  
+  var text2 = document.getElementById("text2");
+  var text3 = document.getElementById("payment_amount");
+  var price = document.getElementById("price");
+  if (checkBox==0){
+    text3.value=price.value
+    text2.style.display = "block";
+  } else {
+    
+    text2.style.display = "none";
+  }
+}
+
+function myFunction2() {
+  var payment_mode = document.getElementById("payment_mode").value;
+  
+  var nb_bank_check = document.getElementById("nb_bank_check");
+  var transaction_number = document.getElementById("transaction_number");
+  var card_number = document.getElementById("card_number");
+
+
+  if (payment_mode=="Chèque"){
+
+    nb_bank_check.style.display = "block";
+    
+  } else if (payment_mode=="Carte Bancaire") {
+    nb_bank_check.required=false
+    transaction_number.style.display = "block";
+
+    card_number.style.display = "block";
+
+    nb_bank_check.style.display = "none";
+  } else if (payment_mode=="Cash") {
+    nb_bank_check.required=false
+    card_number.required=false
+    transaction_number.required=false
+    transaction_number.style.display = "none";
+    card_number.style.display = "none";
+    nb_bank_check.style.display = "none";
+  } else {
+    nb_bank_check.required=false
+    card_number.required=false
+    transaction_number.required=false
+    nb_bank_check.style.display = "none";
+    card_number.style.display = "none";
+    transaction_number.style.display = "none";
+  
+  }
+
+}
+function myFunction3() {
+  var payment_amount = document.getElementById("payment_amount");
+  var max_payment_amount = document.getElementById("payment_amount").max;
+  var min_payment_amount = document.getElementById("payment_amount").min;
+  var price = document.getElementById("price");
+  if (payment_amount.style.display!="none" && payment_amount.value!=price.value ){
+    payment_amount.value=price.value
+    max_payment_amount=price.value
+    min_payment_amount=price.value
+    
+  } else {
+    payment_amount.value=0
+
+  }
+}
+function date_de_cloture() {
+  var end_date = document.getElementById("end_date");
+  const start_date=document.getElementById("start_date").value
+  end_date.min=start_date
+}
+</script>
+
+	

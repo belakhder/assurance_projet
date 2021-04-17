@@ -1,0 +1,54 @@
+{% extends 'base_page_nav.html' %} {% block body %}
+<div id="body">
+  <div class="container" id="container">
+    <div class="form-container sign-in-container">
+      <form
+        role="form"
+        id="loginform"
+        method="post"
+        action="{{ url_for('user.login_users')}}"
+      >
+        <h1>Login</h1>
+        <fieldset>
+          <div class="form-group">
+            <input
+              name="user_name"
+              id="username"
+              class="form-control input-lg"
+              placeholder="Nom utilisateur"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="form-control input-lg"
+              placeholder="Mot de passe"
+            />
+          </div>
+          <div>
+            <button
+              class="button"
+              type="submit"
+              name="submit"
+              style="background-color: #3d47da"
+              class="btn btn-lg btn-primary"
+              value="Se connecter"
+            >
+              Se connecter
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-right">
+          <h1>Gestion des clients</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base_page.html'%}
+
+{% block body %}
+
+
+
+    <div class="container pt-5"  >
+        <h1  class="text-center">Settings</h1>
+        <br><br><br>
+        <div class="row">
+
+            <div class="col" >
+                
+                <form  id="wrapper" action="{{ url_for('user.insert_settings')}}" method='POST'>
+                <div class="form-group">
+                    <label >Step</label>
+                    <input type="Step" name="step" class="form-control"  placeholder="Entrer le pas pour les montants de l'application">
+                  </div>
+                  <div class="form-group">
+                    <label >le nombre Maximum d'échéances</label>
+                    <input type="max_inst" name="max_inst" class="form-control"  placeholder="Entrer le nombre Maximum d'échéances ">
+                  </div>
+                  <div>
+                    <input type="submit" name="submit"  class="btn btn-lg btn-primary"   value="Valider">
+                  </div>
+              </div>
+          </div>
+    <br>
+  </div>
+{% endblock %}

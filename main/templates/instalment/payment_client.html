@@ -1,0 +1,190 @@
+{% extends 'base_page_nav.html'%} {% block body %}
+<div class="row" style="margin: auto">
+  <div class="col">
+    <br />
+
+    <table class="table table-striped" id="tablewrapper">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">id</th>
+          {% for name in inst_record[1][1:5] %}
+          <th scope="col">{{name}}</th>
+          {%endfor%}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"></th>
+          <td>{{inst_id}}</td>
+          {% for row in inst_record[0][1:5] %}
+          <td>{{row}}</td>
+
+          {%endfor%}
+        </tr>
+      </tbody>
+    </table>
+    <div class="row" style="padding: 2%">
+      <div class="col" style="padding-left: 20%; padding-right: 20%">
+        <form
+          id="wrapper"
+          role="form"
+          method="post"
+          action="{{ url_for('instalment.inst_payments',id=id,contract_id=contract_id,inst_id=inst_id)}}"
+        >
+          <fieldset>
+            <h5 class="text-uppercase pull-center">Paiement</h5>
+            <div class="form-group">
+              <label>Montant</label>
+              <input
+                type="number"
+                name="payment_amount"
+                id="payment_amount"
+                step="0.01"
+                max="{{remaining_amount}}"
+                min="0"
+                required
+                pattern="[-+]?[0-9]*\.?[0-9]*"
+                title="Please Enter a Float Number"
+                class="form-control input-lg"
+                placeholder="Entrer Le Montant à Payer"
+              />
+            </div>
+            <div class="form-group">
+              <label class="required">Mode de Paiement</label>
+              <select
+                type="text"
+                class="form-control"
+                name="payment_mode"
+                id="payment_mode"
+                required
+                oninput="myFunction2()"
+              >
+                <option>Cash</option>
+                <option>Chèque</option>
+                <option>Carte Bancaire</option>
+              </select>
+            </div>
+            <div class="form-group" id="nb_bank_check" style="display: none">
+              <label>Numéro Du Chéque</label>
+              <input
+                type="nb_bank_check"
+                name="nb_bank_check"
+                id="nb_bank_check"
+                class="form-control"
+                placeholder="Entrer La réference Du Chéque Bancaire"
+              />
+            </div>
+            <div
+              class="form-group"
+              id="transaction_number"
+              style="display: none"
+            >
+              <label>Numéro Du Transaction</label>
+              <input
+                type="transaction_number"
+                name="transaction_number"
+                id="transaction_number"
+                class="form-control"
+                placeholder="Entrer
+              La réference Du Transaction Bancaire"
+              />
+            </div>
+            <div class="form-group" id="card_number" style="display: none">
+              <label>Numéro De La Carte Bancaire</label>
+              <input
+                type="card_number"
+                name="card_number"
+                id="card_number"
+                class="form-control"
+                placeholder="Entrer Le Numéro De La Carte Bancaire"
+              />
+            </div>
+            <div class="form-group">
+              <label>Nom Payeur</label>
+              <input
+                type="payor_last_name"
+                name="payor_last_name"
+                class="form-control"
+                placeholder="Entrer Nom Du Payeur "
+              />
+            </div>
+            <div class="form-group">
+              <label>Prénom Payeur</label>
+              <input
+                type="payor_name"
+                name="payor_name"
+                class="form-control"
+                placeholder="Entrer Prénom Du Payeur"
+              />
+            </div>
+            <div
+              class="form-group"
+              style="display: flex; justify-content: space-around; width: 200px"
+            >
+              <button type="submit" name="submit" id="btn" value="Payer">
+                payer
+              </button>
+              <a
+                id="btn"
+                style="
+                  padding: 14px;
+                  font-weight: bold;
+                  font-size: 0.75em;
+                  background-color: grey;
+                "
+                href="{{url_for('instalment.show_all_instalments',id=id,contract_id=contract_id)}}"
+                >Fermer</a
+              >
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <script>
+      function myFunction2() {
+        var payment_mode = document.getElementById("payment_mode").value;
+
+        var nb_bank_check = document.getElementById("nb_bank_check");
+        var transaction_number = document.getElementById("transaction_number");
+        var card_number = document.getElementById("card_number");
+
+        if (payment_mode == "Chèque") {
+          nb_bank_check.style.display = "block";
+          card_number.required = false;
+          card_number.style.display = "none";
+        } else if (payment_mode == "Carte Bancaire") {
+          nb_bank_check.required = false;
+          transaction_number.style.display = "block";
+
+          card_number.style.display = "block";
+
+          nb_bank_check.style.display = "none";
+        } else if (payment_mode == "Cash") {
+          nb_bank_check.required = false;
+          card_number.required = false;
+          transaction_number.required = false;
+          transaction_number.style.display = "none";
+          card_number.style.display = "none";
+          nb_bank_check.style.display = "none";
+        } else {
+          nb_bank_check.required = false;
+          card_number.required = false;
+          transaction_number.required = false;
+          nb_bank_check.style.display = "none";
+          card_number.style.display = "none";
+          transaction_number.style.display = "none";
+        }
+      }
+
+      // nav = document.getElementById("nav");
+      // nav.style.display = "none";
+      // console.log(nav);
+      body = document.getElementById("background");
+      console.log(body);
+      body.style.backgroundColor = "white";
+    </script>
+
+    {% endblock %}
+  </div>
+</div>

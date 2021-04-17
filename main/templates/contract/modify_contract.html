@@ -1,0 +1,109 @@
+{% extends 'base_page.html'%}
+
+{% block body %}
+<div class="row">
+    <div class="col">
+    <br>
+    <a class="btn btn-primary float-right" href="{{url_for('client.display_client',id=session['client_id'],contract_id=session['contract_id'])}}" role="button">fiche client</a>
+    </div>
+</div>
+<div class="row" style="padding-right:0%;">
+    <div style="padding:5%;margin:auto;">
+    <div class="card" style="padding:5%;margin:auto;">
+        <form role="form" method="post" action="{{ url_for('contract.modify_client_contract',id=id,contract_id=contract_id)}}">
+            <div class="row"  >
+                <div class="col"  style="padding-left: 0%;padding-right: 10%;">
+                    <div style="width: 150%;">
+                        <h5>Contract  Informations</h5>
+                        <ul > 
+                        {% for (key,value) in contract.items() %}
+                        <li><strong>{{ key }}</strong> :   {{value}}</li>
+                        {% endfor %}
+                        
+                        </ul>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            
+        
+        {%if id%}
+
+                <div class="col" >
+                
+                            <fieldset>							
+                                <p class="text-uppercase">Modifier la proposition de contrat </p>	
+                                <div>                 
+                                <div>Statu
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"  value="" checked>
+                                        <label class="form-check-label" >
+                                        None
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" disabled="disabled" value="En cours" >
+                                        <label class="form-check-label" >
+                                        En attente
+                                        </label>
+                                    </div>
+                                    {%if g.current_user[1]=='Manager'%}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"  value="Activé" >
+                                        <label class="form-check-label">
+                                        Activé
+                                        </label>
+                                    </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status"  value="Résilié" >
+                                    <label class="form-check-label" >
+                                    Résilié
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" value="Annulé" >
+                                    <label class="form-check-label" >
+                                    Annulé
+                                    </label>
+                                </div>
+                                {%else%}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" disabled=disabled value="activated" >
+                                    <label class="form-check-label">
+                                    Activé
+                                    </label>
+                                </div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" disabled=disabled value="rescinded" >
+                                <label class="form-check-label" >
+                                Résilié
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" disabled=disabled value="Annulé" >
+                                <label class="form-check-label" >
+                                Annulé
+                                </label>
+                            </div>
+                            {%endif%}
+                            </div>
+                        </div>
+                        </fieldset>	
+
+                </div>
+        {%endif%}
+                    
+        </div>
+
+    </div>
+    <div>
+        <a class="btn btn-primary float-right" href="{{url_for('instalment.show_all_instalments',id=id,contract_id=contract['id'])}}" role="button">instalments</a>
+        <input type="submit" name="submit" class="btn btn-primary float-right"   value="Modifier">
+    </div>
+</div>
+</form>
+</div>
+
+{% endblock %}

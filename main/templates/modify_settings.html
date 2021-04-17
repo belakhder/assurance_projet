@@ -1,0 +1,39 @@
+{% extends 'base_page.html'%}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+	<div class="container">
+		<h2 class="text-center" id="title">Settings</h2>
+			<p class="text-center">
+		</p>
+		<hr>
+		<br><br><br>
+        <div class="row">
+          <div class="col">
+            <!-------null------>
+          </div>
+            <div class="col" id="wrapper">
+                
+                <form action="{{ url_for('user.modify_settings')}}" method='POST'>
+                <div class="form-group">
+                    <label >Step</label>
+                    <input type="float" name="step" class="form-control"  pattern=[-+]?[0-9]*\.?[0-9]* title="Veuillez saisir un nombre flottant" placeholder="Entrer le nombre minimal d'échéances">
+                  </div>
+                  <div class="form-group">
+                    <label >le nombre Maximum d'échéances</label>
+                    <input type="number" name="max_inst" class="form-control"  step="1" placeholder="Entrer le nombre Maximum d'échéances ">
+                  </div>
+                  <div>
+                    <button type="submit" name="submit" id="btn"  value="Valider">Valider</button>
+                  </div>
+              </div>
+              <div class="col">
+                <!-------null------>
+              </div>
+          </div>
+    <br>
+  </div>
+{% endblock %}

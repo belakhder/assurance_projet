@@ -1,0 +1,81 @@
+{% extends 'base_page.html' %} {% block body %} {%if id%}
+<div class="row">
+  <div class="col">
+    <br />
+    <a
+      class="btn btn-primary float-right"
+      href="{{url_for('client.display_client',id=session['client_id'],contract_id=session['contract_id'])}}"
+      role="button"
+      >fiche client</a
+    >
+  </div>
+</div>
+
+<div class="row" style="padding: 2%">
+  <div class="col" style="padding-left: 20%; padding-right: 20%">
+    <form
+      role="form"
+      method="post"
+      action="{{url_for('sinister.add_sinister_',id=id,contract_id=contract_id)}}"
+    >
+      <fieldset>
+        <p class="text-uppercase pull-center">Créer Sinister</p>
+        <div class="form-group">
+          <textarea
+            name="description"
+            class="form-control"
+            id="description"
+            rows="3"
+            maxlength="200"
+            placeholder="description"
+          ></textarea>
+        </div>
+        <input
+          type="date"
+          id="sinister_date"
+          name="sinister_date"
+          id="datepicker"
+          class="form-control datepicker"
+          required
+          placeholder="Entrer La Date De Début Effective "
+        />
+        <div class="form-group">
+          <input
+            type="text"
+            name="opposing_insurer"
+            id="opposing insurer"
+            class="form-control input-lg"
+            required
+            placeholder="Assureur adversaire"
+            maxlength="30"
+            min="{{now}}"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            pattern="[-+]?[0-9]*\.?[0-9]*"
+            title="Please Enter a Float Number"
+            required
+            class="form-control input-lg"
+            required
+            placeholder="Montant"
+          />
+        </div>
+        <div>
+          <input
+            type="submit"
+            name="submit"
+            class="btn btn-lg btn-primary"
+            value="Ajouter"
+          />
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+{%endif%} {% endblock %}

@@ -1,0 +1,728 @@
+{% extends 'base_page.html'%}
+
+{% block body %}
+<div class="container">
+<div class="row">
+  <div class="col">
+    <br><br>
+    <h1 class="text-center">Critères de Recherche</h1>
+    <form action="{{ url_for('contract.dashbaord')}}" method='POST'>
+  </div>
+</div>
+<br><br>
+<div class="row">
+  <div class="float-right">
+    <input type="submit" name="submit"  id="btn"   value="Chercher">
+  </div>
+</div>
+<br><br>
+<div class="row">
+  <div class="col">
+    
+    <h5>statistiques contrat</h5>
+
+    {% if 'date1' in date.keys() %}
+
+    {% set date11=date['date1'][0] %}
+    {% set date21=date['date1'][1] %}
+    {% else %}
+    {% set date11=date1 %}
+    {% set date21=date2 %}
+    {% endif %}
+    <div class="form-group">
+      
+      <label > date de creation contrat</label>
+      <br>
+      <input type="text" id="daterange_con" name="daterange_con" value="{{date11}} - {{date21}}" />
+    </div>
+    <div style="height:300px" id="pie-chart_div">
+      <canvas id="pie-chart"></canvas>
+    </div>
+    {% if record %}
+    
+    <table class="table table-striped responsive"  id="tablewrapper" style="padding: 2.5%;">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          {% for name in ['montant','pourcentage','status'] %}
+
+          <th scope="col">{{name}}</th>
+          {%endfor%}
+        </tr>
+      
+      </thead>
+
+      <tbody>
+      {% for row in record %}
+          
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+                          
+          <td id='montant{{loop.index}}'>{{row[0]|round(2)}}</td>
+          <td id='pourcentage{{loop.index}}' >{{(row[1]*100)|round(2)}}</td>
+          <td id='status{{loop.index}}' >{{row[2]}}</td>
+        </tr>
+        {%endfor%}  
+      
+      </tbody>
+    </table>
+        {% else %}
+    <div class="alert alert-warning" role="alert">
+      
+      Aucun Résultat Pour Les Critères Choisis !
+    </div>
+    {% endif %}
+
+  </div>
+  <div class="col">
+    <h5>statistiques échéances</h5>
+    {% if 'date2' in date.keys() %}
+    {% set date12=date['date2'][0] %}
+    {% set date22=date['date2'][1] %}
+    {% else %}
+    {% set date12=date1 %}
+    {% set date22=date2 %}
+    {% endif %}
+
+    <div class="form-group">
+      <label > date d'échéance</label>
+      <br>
+      <input type="text" id="daterange_inst" name="daterange_inst" value="{{date12}} - {{date22}}" />
+    </div>
+    <div style="height:300px" id="pie-chart_div2">
+      <canvas id="pie-chart2"></canvas>
+    </div>
+  {% if record2 %}
+    <table class="table table-striped responsive"  id="tablewrapper" style="padding: 2.5%">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          {% for name in ['montant','pourcentage','status'] %}
+
+          <th scope="col">{{name}}</th>
+          {%endfor%}
+        </tr>
+      
+      </thead>
+
+      <tbody>
+      {% for row in record2 %}
+          
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+                          
+          <td id="montant_inst{{loop.index}}">{{row[0]|round(2)}}</td>
+          <td id="pourcentage_inst{{loop.index}}">{{(row[1]*100)|round(2)}}</td>
+          <td id="status_inst{{loop.index}}">{{row[2]}}</td>
+        </tr>
+        {%endfor%}  
+      
+      </tbody>
+    </table>
+        {% else %}
+    <div class="alert alert-warning" role="alert">
+      
+      Aucun Résultat Pour Les Critères Choisis !
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+
+    {% if 'date3' in date.keys() %}
+    {% set date13=date['date3'][0] %}
+    {% set date23=date['date3'][1] %}
+    {% else %}
+    {% set date13=date1 %}
+    {% set date23=date2 %}
+    {% endif %}
+
+      <h5>statistiques paiements</h5>
+
+      <div class="form-group">
+        <label > date de paiement</label>
+        <br>
+        <input type="text" id="daterange_pay" name="daterange_pay" value="{{date13}} - {{date23}}" />
+      </div>
+      <div style="height:300px" id="pie-chart_div3">
+        <canvas id="pie-chart3"></canvas>
+      </div>
+  {% if record3 %}  
+      <table class="table table-striped responsive"  id="tablewrapper" style="padding: 2.5%">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            {% for name in ['montant','pourcentage','mode de paiement'] %}
+
+            <th scope="col">{{name}}</th>
+            {%endfor%}
+          </tr>
+        
+        </thead>
+
+        <tbody>
+        {% for row in record3 %}
+            
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+                            
+            <td id="montant_pay{{loop.index}}">{{row[0]|round(2)}}</td>
+            <td id="pourcentage_pay{{loop.index}}">{{(row[1]*100)|round(2)}}</td>
+            <td id="status_pay{{loop.index}}">{{row[2]}}</td>
+
+          </tr>
+          {%endfor%}  
+        
+        </tbody>
+      </table>
+          {% else %}
+    <div class="alert alert-warning" role="alert">
+      
+      Aucun Résultat Pour Les Critères Choisis !
+    </div>
+    {% endif %}
+  </div>
+  <div class="col">
+    {% if 'date5' in date.keys() %}
+    {% set date15=date['date5'][0] %}
+    {% set date25=date['date5'][1] %}
+    {% else %}
+    {% set date15=date1 %}
+    {% set date25=date2 %}
+    {% endif %}
+    
+      <h5>statistiques sinistres </h5>
+
+    <div class="form-group">
+      <label > date de creation sinistre</label>
+      <br>
+      <input type="text" id="daterange_sin" name="daterange_sin" value="{{date15}} - {{date25}}" />
+    </div>
+    <div style="height:300px" id="pie-chart_div4">
+      <canvas id="pie-chart4"></canvas>
+    </div>
+  {% if record5 %}
+  
+    <table class="table table-striped responsive" id="tablewrapper"
+     style="padding: 2.5%">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            {% for name in ['montant','pourcentage','status'] %}
+
+            <th scope="col">{{name}}</th>
+            {%endfor%}
+          </tr>
+        
+        </thead>
+
+        <tbody>
+        {% for row in record5 %}
+            
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+                            
+            <td id="montant_sin{{loop.index}}">{{row[0]|round(2)}}</td>
+            <td id="pourcentage_sin{{loop.index}}">{{(row[1]*100)|round(2)}}</td>
+            <td id="status_sin{{loop.index}}">{{row[2]}}</td>
+
+          </tr>
+          {%endfor%}  
+        
+        </tbody>
+      </table>
+          {% else %}
+    <div class="alert alert-warning" role="alert">
+      
+      Aucun Résultat Pour Les Critères Choisis !
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {% if 'date4' in date.keys() %}
+    {% set date14=date['date4'][0] %}
+    {% set date24=date['date4'][1] %}
+    {% else %}
+    {% set date14=date1 %}
+    {% set date24=date2 %}
+    {% endif %}
+ 
+      <h5>statistiques indemnités</h5>
+
+      <div class="form-group">
+        <label > date de creation indemnité</label>
+        <br>
+        <input type="text" id="daterange_indem" name="daterange_indem" value="{{date14}} - {{date24}}"/>
+      </div>
+      <div style="height:300px" id="pie-chart_div5">
+        <canvas id="pie-chart5"></canvas>
+      </div>
+  {% if record4 %}  
+      <table class="table table-striped responsive" id="tablewrapper" style="padding: 2.5%">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            {% for name in ['montant','pourcentage','status'] %}
+
+            <th scope="col">{{name}}</th>
+            {%endfor%}
+          </tr>
+        
+        </thead>
+
+        <tbody>
+        {% for row in record4 %}
+            
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+                            
+            <td id="montant_indem{{loop.index}}">{{row[0]|round(2)}}</td>
+            <td id="pourcentage_indem{{loop.index}}">{{(row[1]*100)|round(2)}}</td>
+            <td id="status_indem{{loop.index}}">{{row[2]}}</td>
+
+          </tr>
+          {%endfor%}  
+        
+        </tbody>
+      </table>
+          {% else %}
+    <div class="alert alert-warning" role="alert">
+      
+      Aucun Résultat Pour Les Critères Choisis !
+    </div>
+    {% endif %}
+  </div>
+  <div class="col"></div>
+</div>
+
+</form>
+
+        
+   
+    <br>
+    <br>
+    <br>
+    
+
+  </div>
+<script>
+
+  $ (function() {
+
+$('input[name="daterange_con"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange_con");
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  
+  });
+});
+
+$ (function() {
+
+$('input[name="daterange_inst"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange_inst");
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  
+  });
+});
+
+$ (function() {
+
+$('input[name="daterange_pay"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange_pay");
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  
+  });
+});
+$ (function() {
+
+$('input[name="daterange_sin"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange_sin");
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  
+  });
+});
+$ (function() {
+
+$('input[name="daterange_indem"]').daterangepicker({
+  locale : {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Valider",
+    "cancelLabel": "Annuler",
+    "fromLabel": "De",
+    "toLabel": "à",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dim",
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam"
+    ],
+    "monthNames": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+    ],
+      "firstDay": 1
+  },
+  opens:'right'
+  }, function(start, end, label) {
+  var range = document.getElementById("daterange_indem");
+  
+  console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  range.value=start.format('DD-MM-YYYY')+'-'+end.format('DD-MM-YYYY')
+  });
+});
+
+//pie chart 
+var i;
+var montant={"En Cours":0, "Activé":0,"Annulé":0,"Résilié":0}
+for (i = 0; i < 4; i++) {
+if(document.getElementById("montant".concat(i+1))!=undefined){
+  status= document.getElementById("status".concat(i+1)).innerText;
+  montant[status]= document.getElementById("montant".concat(i+1)).innerText;
+  }
+}
+if (montant["En Cours"]==0 && montant["Activé"]==0 && montant["Annulé"]==0 && montant["Résilié"]==0){
+    const pie=document.getElementById("pie-chart_div")
+    pie.style.display="none";
+  }
+console.log(montant)
+new Chart(document.getElementById("pie-chart"), {
+        type: "pie",
+        data: {
+          labels: ["En cours", "Activé","Annulé","Résilié"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+              ],
+              data: [montant['En Cours'],montant['Activé'],montant['Annulé'],montant['Résilié']]
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Totale du montant à payé pour les contrcats  (euros) ",
+          },
+        },
+      });
+
+
+var j;
+var montant_inst={"En Attente":0,"Partiellement Payé":0, "Payé":0}
+for (j = 0; j < 4; j++) {
+if(document.getElementById("montant_inst".concat(j+1))!=undefined){
+  status= document.getElementById("status_inst".concat(j+1)).innerText;
+  montant_inst[status]= document.getElementById("montant_inst".concat(j+1)).innerText;
+  }
+}
+if (montant_inst["En Attente"]==0 && montant_inst["Payé"]==0 && montant_inst["Partiellement Payé"] ){
+    const pie=document.getElementById("pie-chart_div2")
+    pie.style.display="none";
+  }
+console.log(montant_inst)
+new Chart(document.getElementById("pie-chart2"), {
+        type: "pie",
+        data: {
+          labels: ["En Attente","Partiellement Payé", "Payé"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+              ],
+              data: [montant_inst["En Attente"],montant_inst["Partiellement Payé"],montant_inst["Payé"]]
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Totale du montant des échéances   (euros) ",
+          },
+        },
+      });
+var k;
+var montant_pay={"Cash":0, "Chèque":0,"Carte Bancaire":0}
+for (k = 0; k < 4; k++) {
+if(document.getElementById("montant_pay".concat(k+1))!=undefined){
+  status= document.getElementById("status_pay".concat(k+1)).innerText;
+  montant_pay[status]= document.getElementById("montant_pay".concat(k+1)).innerText;
+  }
+}
+if (montant_pay["Cash"]==0 && montant_pay["Chèque"]==0 && montant_pay["Carte Bancaire"]==0 ){
+    const pie=document.getElementById("pie-chart_div3")
+    pie.style.display="none";
+  }
+console.log(montant_pay)
+new Chart(document.getElementById("pie-chart3"), {
+        type: "pie",
+        data: {
+          labels: ["cash", "Chèque","Carte Bancaire"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+              ],
+              data: [montant_pay["Cash"],montant_pay["Chèque"],montant_pay["Carte Bancaire"]]
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Totale du montant des modes de paiement   (euros) ",
+          },
+        },
+      });
+var l;
+var montant_sin={"En Attente":0, "Valide":0,"Invalide":0}
+for (l = 0; l < 4; l++) {
+if(document.getElementById("montant_sin".concat(l+1))!=undefined){
+  status= document.getElementById("status_sin".concat(l+1)).innerText;
+  montant_sin[status]= document.getElementById("montant_sin".concat(l+1)).innerText;
+  }
+}
+if (montant_sin["En Attente"]==0 && montant_sin["Valide"]==0 && montant_sin["Invalide"]==0 ){
+    const pie=document.getElementById("pie-chart_div4")
+    pie.style.display="none";
+  }
+console.log(montant_sin)
+new Chart(document.getElementById("pie-chart4"), {
+        type: "pie",
+        data: {
+          labels: ["En Attente", "Valide","Invalide"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+              ],
+              data: [montant_sin["En Attente"],montant_sin["Valide"],montant_sin["Invalide"]]
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Totale du montant des sinistres  (euros) ",
+          },
+        },
+      });
+var o;
+var montant_indem={"Effectué":0, "Non Effectué":0}
+for (o = 0; o < 3; o++) {
+if(document.getElementById("montant_indem".concat(o+1))!=undefined){
+  status= document.getElementById("status_indem".concat(o+1)).innerText;
+  montant_indem[status]= document.getElementById("montant_indem".concat(o+1)).innerText;
+  }
+}
+if (montant_indem["Effectué"]==0 && montant_indem["Non Effectué"]==0 ){
+    const pie=document.getElementById("pie-chart_div5")
+    pie.style.display="none";
+  }
+console.log(montant_indem)
+new Chart(document.getElementById("pie-chart5"), {
+        type: "pie",
+        data: {
+          labels: ["Effectué", "Non Effectué"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+              ],
+              data: [montant_indem["Effectué"],montant_indem["Non Effectué"]]
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Totale du montant des indemnités  (euros) ",
+          },
+        },
+      });
+</script>
+{% endblock %}

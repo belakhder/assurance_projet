@@ -1,0 +1,10 @@
+
+{% extends "public_template.html" %}
+
+{% block subscription_confirmation %}
+<p>welcome {{user.name}},</p>
+<p>Congratulation your subscription was a success here is {{cred.username}} and {{cred.password}} for first login.
+<p>Best,</p>
+<p>{{company.name}}</p>
+<p>{{company.address_mail}}</p>
+{% endblock %}

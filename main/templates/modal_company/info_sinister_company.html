@@ -1,0 +1,154 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="info_sinister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier Les Informations Sinistre</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+    <form
+      role="form"
+      method="post"
+
+    >
+      <fieldset>
+        <p class="text-uppercase pull-center">Modifier Sinistre.</p>
+        <div class="form-group">
+          <input
+            type="text"
+            name="description"
+            id="description"
+            class="form-control input-lg"
+            placeholder="Description"
+           
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="opposing_insurer"
+            id="opposing_insurer"
+            class="form-control input-lg"
+            placeholder="Assureur adversaire"
+           
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            pattern="[-+]?[0-9]*\.?[0-9]*"
+            title="Please Enter a Float Number"
+            class="form-control input-lg"
+            placeholder="Montant"
+     
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="date"
+            name="sinister_date"
+            id="sinister_date"
+            class="form-control input-lg"
+         
+          />
+        </div>
+        <div>
+          Statu
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value=""
+              id='None'
+              checked
+            />
+            <label class="form-check-label"> None </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+             
+              value="En Attente"
+              id="En_Attente"
+              
+            />
+            <label class="form-check-label"> En Attente </label>
+          </div>
+          {%if g.current_user[1]=='Manager'%}
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value="Valide"
+              id='Valide'
+            />
+            <label class="form-check-label"> Valide </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="status"
+              value="Invalide"
+              id="Invalide"
+            />
+            <label class="form-check-label"> Invalide </label>
+          </div>
+          {%else%}
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              
+              name="status"
+              value="Valide"
+              id="Valide"
+            />
+            <label class="form-check-label"> Valide </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              
+              name="status"
+              value="Invalide"
+              id="Invalide"
+            />
+            <label class="form-check-label"> Invalide </label>
+          </div>
+          {%endif%}
+        </div>
+ 
+      
+
+ 
+
+</div>
+      <div class="modal-footer">
+        <button type="button" id='btn'style="background-color:grey" data-dismiss="modal">Fermer</button>
+          <button
+            type="submit"
+            name="submit"
+            id='btn' 
+            value="Modifier"
+          >Valider</button>
+  </fieldset>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>
+

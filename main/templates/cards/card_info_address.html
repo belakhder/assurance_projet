@@ -1,0 +1,27 @@
+<h5>
+  <i class="fa fa-location-arrow" aria-hidden="true"></i> Informations D'adresse
+  {%if id%}
+
+  <a
+    data-toggle="modal"
+    data-target="#info_address"
+    title="Modifier informations d'adresse"
+    class="btn"
+  >
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+  </a>
+  {%endif%}
+</h5>
+<div class="row">
+  <div class="col-sm">
+    {% if address_info %}
+    <ul>
+      {% for (key,value) in address_info.items() %}
+      <li>
+        <span><strong>{{ key }}</strong></span> : {{value}}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
